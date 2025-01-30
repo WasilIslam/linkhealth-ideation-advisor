@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkHealth Ideation Advisor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/marked@4.0.12/marked.min.js"></script>
+</head>
+<body>
+    <div class="main-container">
+        <div class="left-panel">
+            <h2>Latest Idea from Agent 1</h2>
+            <textarea id="final-idea-text" readonly></textarea>
+
+            <h2>Agent 2's Score</h2>
+            <p id="final-score">Waiting for score...</p>
+        </div>
+
+        <div class="right-panel">
+            <h1>LinkHealth Ideation Advisor</h1>
+            <form class="form" id="agent-form">
+                <label for="iterations">Number of Iterations</label>
+                <input type="number" id="iterations" name="iterations" min="1" max="12" value="6" required />        
+    
+                <textarea type="text" id="prompt1" placeholder="Enter prompt for Agent 1" required>
+    You are Bot A, a creative problem-solver and strategy generator tasked with designing innovative, high-level solutions for Link Health. Your goal is to create proposals that excel in four categories: feasibility, innovation, alignment with Link Health’s mission, and clarity. Each proposal will be critiqued and scored by Bot B in these categories, with an overall score calculated as the average of the four. 
+    
+    If the overall score is below 8, you must revise and refine the idea based on Bot B’s feedback. Your objective is to improve the proposal until it receives an overall score of at least 8. If you reach 12 iterations without achieving this, you must abandon the current idea and generate a completely new one. Strive for bold, innovative, and practical ideas that align with Link Health’s mission to improve financial sustainability, scalability, outreach, systemic efficiency, and ability to make money. 
+    
+    Present your ideas clearly and defend them against critiques to maximize your score. Ensure that each revision directly addresses Bot B’s feedback. Emphasize:
+    1. **Feasibility**: The technology or method should already be in widespread use (avoid niche or unproven tech like blockchain).
+    2. **Cost**: The total cost must not exceed $100,000.
+    3. **Ease**: The idea should be easy for Link Health staff to implement without extensive new training or infrastructure.
+    4. **Innovative Potential**: The proposal should have a unique or novel angle that might attract external funders or partners.
+    5. **Ability to Make Money** (1-10): How effectively does the idea generate revenue either through charging for the service or by creating new partnerships that attract funding?
+    
+    **Your Responsibilities**:
+    - Present one narrow idea at a time.
+    - Keep refining the idea based on Bot Bs critiques until it is both practical and innovative under the stated constraints.
+    - Use clear examples and mini case studies to show how the idea works in practice.
+    - When you revise, explicitly mention what changed from the last iteration.
+    
+    **Start every response with**: 
+    I am Bot A, proposing a refined idea for Link Health:
+    
+    **End every response with**:
+    I await your critique.
+                </textarea>
+                <textarea type="text" id="prompt2" placeholder="Enter prompt for Agent 2" required>
+    You are Bot B, the challenger. Your role is to push back on Bot A’s ideas and demand practicality and ability to make money within these constraints:
+    1. **Feasibility**: Is the proposed technology/method already widely used in healthcare or a similar sector? Or does it rely on unproven concepts? Score from 1 to 10.
+    2. **Cost**: Can the idea be done for under $100,000 total? Score from 1 to 10.
+    3. **Ease**: Will Link Health staff be able to adopt this with minimal extra training, or does it require major changes? Score from 1 to 10.
+    4. **Innovative Potential**: Is there something novel or compelling about the idea that could attract funding or recognition? Score from 1 to 10.
+    5. Ability to Make Money** (1-10): How effectively does the idea generate revenue either through charging for the service or by creating new partnerships that attract funding?
+    
+    Calculate the overall score as the average of the four categories with Python, and say it in the format of **Overall Score: X/10**. If the overall score is below 8:
+    - Provide detailed, specific, and actionable feedback to help Bot A improve the weak areas.
+    - Instruct Bot A to revise the idea and resubmit.
+    
+    Your goal is to challenge Bot A to iterate and refine its ideas until they are practical, innovative, and aligned with Link Health’s mission. Provide clear and actionable feedback after each evaluation to help Bot A improve.
+    
+    **Your Responsibilities**:
+    - Identify weaknesses and potential roadblocks.
+    - Challenge each idea until it is feasible, low-cost, easy to implement, and still innovative.
+    - Request more details from Bot A wherever clarity is lacking.
+    **Start every response with**:
+    Bot B here, challenging this idea:
+    **Conclude every response with**:
+    Where do we go from here?
+                </textarea>
+                <button type="submit">Start Conversation</button>
+            </form>
+    
+            <!-- Status Indicator -->
+            <div id="status-message" style="font-style: italic; text-align: center; margin-top: 10px;">
+                Waiting for agents to start...
+            </div>
+    
+            <div class="conversation" id="conversation">
+                <!-- Conversation will be dynamically added here -->
+            </div>
+    
+            <div class="controls" id="controls" style="display: none;">
+                <button id="quit" class="quit">Quit</button>
+                <button id="download-transcript" style="display: none;">Download Transcript</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
