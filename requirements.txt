@@ -1,7 +1,3 @@
-flask
-openai
-dotenv
-threading
-time
-re
-os
+flask==2.2.5
+openai==1.2.3
+dotenv==1.0.0
